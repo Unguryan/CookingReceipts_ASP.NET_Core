@@ -1,0 +1,68 @@
+<p>Register View</p>
+
+
+
+
+<div class="container">
+
+  <form class="form-signin" #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+
+    <h2 class="form-signin-heading">Register</h2>
+    
+    <br />
+
+    <div class="col-md-3">
+
+      <div class="mt-3">
+        <div>
+          <input class="form-control" asp-for="Name"
+                 type="text" id="Name" name="Name" ngModel placeholder="Name" required
+                 autofocus />
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div>
+          <input class="form-control" asp-for="UserName"
+                 type="text" id="UserName" name="UserName" ngModel placeholder="UserName" required
+                 autofocus />
+          <div *ngIf="invalidUserName" class="alert alert-danger">Username is already taken.</div>
+
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div>
+          <input class="form-control" asp-for="Password"
+                 type="password" id="Password" name="Password" ngModel placeholder="Password"
+                 #password="ngModel" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                 required />
+          <div *ngIf="password.invalid && (registerForm.submitted || password.touched)" class="alert alert-danger">
+            <div *ngIf="password.errors?.required"> Password is required. </div>
+            <div *ngIf="password.errors?.pattern">
+              Must contain at least one number and one uppercase and lowercase letter,
+              and at least 8 or more characters.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div>
+          <input class="form-control"
+                 type="password" id="ConfirmPassword" name="ConfirmPassword" ngModel placeholder="Confirm Password"
+                 #confirmpassword="ngModel" pattern="{{ password.value }}"
+                 required />
+          <div *ngIf="confirmpassword.invalid && (registerForm.submitted || confirmpassword.touched)" class="alert alert-danger h-10">
+            <div *ngIf="confirmpassword.errors?.required"> Confirm password is required. </div>
+            <div *ngIf="confirmpassword.errors?.pattern"> Password & Confirm Password does not match.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <button type="submit" [disabled]="confirmpassword.invalid || password.invalid" class="btn btn-success mt-3">Sign up</button>
+  </form>
+
+</div>

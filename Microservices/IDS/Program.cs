@@ -28,12 +28,18 @@ builder.Services.AddScoped<DBSeed>();
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors();
+
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors(builder => builder.WithOrigins("https://localhost:44497")
+                                .AllowAnyMethod()
+                                .AllowAnyHeader());
 
 app.UseAuthorization();
 

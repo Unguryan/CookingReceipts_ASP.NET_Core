@@ -1,0 +1,43 @@
+<p>Login View</p>
+
+
+<div class="container">
+
+  <form class="form-signin" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+
+    <h2 class="form-signin-heading">Login</h2>
+    <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
+    <br />
+
+    <div class="col-md-3">
+      <div class="mt-3">
+        <div>
+          <input class="form-control" asp-for="UserName" #userName="ngModel"
+                 type="text" id="UserName" name="UserName" ngModel placeholder="UserName" required
+                 autofocus />
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div>
+          <input class="form-control" asp-for="Password" #password="ngModel"
+                 type="password" id="Password" name="Password" ngModel placeholder="Password"
+                 required />
+        </div>
+      </div>
+
+      <div class="mt-3 d-flex align-items-top">
+        <label for="RememberMe">RememberMe</label>
+        <div class="ms-2">
+          <input class="form-check" asp-for="RememberMe" value="false"
+                 type="checkbox" id="RememberMe" name="RememberMe" ngModel placeholder="RememberMe"
+                 required />
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3" [disabled]="userName.invalid || password.invalid">Sign in</button>
+    <button type="button" class="btn btn-primary mt-3 ms-2 " (click)="onSignUpClick()">Sign up</button>
+  </form>
+
+</div>

@@ -3,23 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{896BD919-16F4-4472-8034-3E194B8836E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "Interfaces\Interfaces.csproj", "{896BD919-16F4-4472-8034-3E194B8836E0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{8D2232BC-8885-48A4-9A78-49932F89FBFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CategoryMicroservice", "Microservices\CategoryMicroservice\CategoryMicroservice.csproj", "{2B602D6B-9895-4B18-9F26-0B58F50F7219}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CategoryMicroservice", "Microservices\CategoryMicroservice\CategoryMicroservice.csproj", "{2B602D6B-9895-4B18-9F26-0B58F50F7219}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReceiptsMicroservice", "Microservices\ReceiptsMicroservice\ReceiptsMicroservice.csproj", "{7D4C9966-084F-4F74-93BB-773609721D2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReceiptsMicroservice", "Microservices\ReceiptsMicroservice\ReceiptsMicroservice.csproj", "{7D4C9966-084F-4F74-93BB-773609721D2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserMicroservice", "Microservices\UserMicroservice\UserMicroservice.csproj", "{030863E7-7AC4-45DA-ACE0-89FE3816043C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserMicroservice", "Microservices\UserMicroservice\UserMicroservice.csproj", "{030863E7-7AC4-45DA-ACE0-89FE3816043C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDS", "Microservices\IDS\IDS.csproj", "{29B5E516-7B2C-43C4-95FF-E94673CA5CC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDS", "Microservices\IDS\IDS.csproj", "{29B5E516-7B2C-43C4-95FF-E94673CA5CC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{F3F790A0-F6D2-40EC-A2F2-76B53A3484B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{F3F790A0-F6D2-40EC-A2F2-76B53A3484B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{21C71C17-0B73-46B4-8E8B-0FAF9268BAEC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI_Angular", "UI_Angular\UI_Angular.csproj", "{0FD6A3DA-D163-4A59-98FC-0B02AA613DA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI_Angular", "WebUI_Angular\WebUI_Angular.csproj", "{D5706941-303A-43DB-91AE-B3DDF63F5617}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,14 +49,10 @@ Global
 		{F3F790A0-F6D2-40EC-A2F2-76B53A3484B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3F790A0-F6D2-40EC-A2F2-76B53A3484B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3F790A0-F6D2-40EC-A2F2-76B53A3484B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21C71C17-0B73-46B4-8E8B-0FAF9268BAEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21C71C17-0B73-46B4-8E8B-0FAF9268BAEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21C71C17-0B73-46B4-8E8B-0FAF9268BAEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21C71C17-0B73-46B4-8E8B-0FAF9268BAEC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FD6A3DA-D163-4A59-98FC-0B02AA613DA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FD6A3DA-D163-4A59-98FC-0B02AA613DA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FD6A3DA-D163-4A59-98FC-0B02AA613DA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FD6A3DA-D163-4A59-98FC-0B02AA613DA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5706941-303A-43DB-91AE-B3DDF63F5617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5706941-303A-43DB-91AE-B3DDF63F5617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5706941-303A-43DB-91AE-B3DDF63F5617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5706941-303A-43DB-91AE-B3DDF63F5617}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
