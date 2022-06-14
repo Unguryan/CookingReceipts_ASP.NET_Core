@@ -10,7 +10,9 @@ namespace Core.Context.Dbo
 
         public string Name { get; set; }
 
-        public List<ReceiptDbo> Receipts { get; set; } 
+        public List<ReceiptDbo> Receipts { get; set; }
+
+        public List<ReceiptDbo> LikedReceipts { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using Core.Context;
+﻿using Core.Attributes;
+using Core.Context;
 using Core.Models;
 using Interfaces.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace UserMicroservice.Controllers
 
         //Add Cookies Auth Attribute
         [HttpGet()]
+        [CustomTokenAuthentication("Owner, Admin")]
         public async Task<IEnumerable<IUser>> GetUsers()
         {
             var list = new List<IUser>();
@@ -32,6 +34,7 @@ namespace UserMicroservice.Controllers
         }
 
         [HttpGet("{id}")]
+        [CustomTokenAuthentication("Owner, Admin")]
         public async Task<IUser> GetUser(int id)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);

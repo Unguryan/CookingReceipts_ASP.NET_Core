@@ -1,5 +1,4 @@
-﻿using Core.Models;
-using Core.RabbitMQ.Models;
+﻿using Core.RabbitMQ.Models;
 using IDS.Attributes;
 using IDS.DB;
 using IDS.DB.Models;
@@ -38,14 +37,14 @@ namespace IDS.Controllers
             _bus = bus;
         }
 
-        [CustomTokenAuthentication("Owner")]
+        [IDSTokenAuthentication("Owner")]
         [HttpGet()]
         public async Task<IEnumerable<IUserIDS>> GetUsers()
         {
            return await _context.Users.ToListAsync();
         }
 
-        [CustomTokenAuthentication("Owner")]
+        [IDSTokenAuthentication("Owner")]
         [HttpGet("{userName}")]
         public async Task<IUserIDS> GetUser(string userName)
         {
@@ -90,7 +89,7 @@ namespace IDS.Controllers
             return userDB.Roles;
         }
 
-        [CustomTokenAuthentication("Owner")]
+        [IDSTokenAuthentication("Owner")]
         [HttpPost("ChangeRoles")]
         public async Task<IUserIDS> ChangeRolesUser(ChangeRolesModel changeRolesModel)
         {
@@ -167,7 +166,7 @@ namespace IDS.Controllers
         }
 
         [HttpPost("Logout")]
-        [CustomTokenAuthentication("Owner, Admin, User")]
+        [IDSTokenAuthentication("Owner, Admin, User")]
         public async Task<bool> Logout(TokenUsernameModel user)
         {
             if (string.IsNullOrEmpty(user.Token))

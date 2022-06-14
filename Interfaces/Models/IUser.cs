@@ -9,5 +9,7 @@
 
         List<IReceipt> Receipts { get; }
 
+        List<IReceipt> LikedReceipts { get; }
+
     }
 }

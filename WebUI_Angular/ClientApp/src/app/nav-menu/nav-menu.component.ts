@@ -88,6 +88,10 @@ export class NavMenuComponent {
         localStorage.removeItem('token');
         this.user = undefined;
       }
+    }, error => {
+      this.router.navigate(['']);
+      localStorage.removeItem('token');
+      this.user = undefined;
     })
 
     

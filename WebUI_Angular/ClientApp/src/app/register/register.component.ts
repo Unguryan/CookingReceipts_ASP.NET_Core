@@ -15,7 +15,13 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router) { }
+    private router: Router) {
+
+    var token = localStorage.getItem('token');
+    if (token != null && token !== "") {
+      this.router.navigate(['']);
+    }
+  }
 
   ngOnInit() { }
 
