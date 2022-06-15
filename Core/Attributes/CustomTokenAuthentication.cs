@@ -9,7 +9,7 @@ namespace Core.Attributes
     {
         private readonly string _roles;
 
-        private const string BaseUrl = "http://localhost:5001/User";
+        private const string BaseUrl = "https://localhost:5001/User";
 
         public CustomTokenAuthentication(string roles)
         {

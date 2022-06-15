@@ -1,0 +1,42 @@
+<p>Categories</p>
+
+<div class="container">
+
+
+
+  <div class="d-flex ">
+
+
+
+    <div class="col col-lg-3">
+      <!--<mat-form-field class="col col-lg-2">
+        <mat-label></mat-label>
+        <input class="input" matInput [(ngModel)]="nameCategory">
+      </mat-form-field>
+      <button (click)="OnSearchClick(nameCategory)" type="button" class="btn btn-primary">Search</button>-->
+      <div class="input-group">
+        <input type="text" matInput [(ngModel)]="nameCategory"
+               class="form-control" placeholder="Name" aria-label="Name" aria-describedby="button-search">
+        <button class="btn btn-primary" type="button" id="button-search">Search</button>
+      </div>
+    </div>
+
+    <div class="ms-auto">
+      <a class="btn btn-outline-success" role="button" [routerLink]="['/categories/add']">Add Category</a>
+      <!--<button class="" type="button" id="button-search">Search</button>-->
+    </div>
+
+  </div>
+
+  <div class="category-list">
+    <mat-card class="category-items" *ngFor="let category of categories">
+      <mat-card-header>
+        <mat-card-title>{{category.name}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-actions>
+        <button class="btn btn-outline-warning" mat-button (click)="OnChangeClick(category)">Change</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+</div>

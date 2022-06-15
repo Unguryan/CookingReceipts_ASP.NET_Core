@@ -3,7 +3,9 @@ using Core.Attributes;
 using Core.Context;
 using Core.Context.Dbo;
 using Core.Models;
+using Core.RabbitMQ.Models;
 using Interfaces.Models;
+using Interfaces.RabbitMQ;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,13 +17,16 @@ namespace CategoryMicroservice.Controllers
     {
 
         private readonly CookingContext _context;
+        private readonly IRabbitBus _bus;
 
-        public CategoryController(CookingContext context)
+        public CategoryController(CookingContext context, IRabbitBus bus)
         {
             _context = context;
+            _bus = bus;
         }
 
         [HttpGet()]
+        [CustomTokenAuthentication("Owner, Admin")]
         public async Task<IEnumerable<ICategory>> GetAllCategories()
         {
             var list = new List<ICategory>();
@@ -97,6 +102,8 @@ namespace CategoryMicroservice.Controllers
             _context.Categories.Remove(res);
             await _context.SaveChangesAsync();
             //TODO: Notify Receips Service, and remove all receipts with this category
+            await _bus.SendAsync<RemovedCategoryRabbitModel>("Categories", new RemovedCategoryRabbitModel() { Id = res.Id});
+
 
             return temp;
         }

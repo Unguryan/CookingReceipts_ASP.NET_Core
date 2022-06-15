@@ -22,10 +22,10 @@ namespace UserMicroservice.Services
 
         private void SubscribeEvents()
         {
-            _bus.ReceiveAsync<UserAddedModel>("Users", async(u) => await OnUserAdded(u));
+            _bus.ReceiveAsync<UserAddedRabbitModel>("Users", async(u) => await OnUserAdded(u));
         }
 
-        private async Task OnUserAdded(UserAddedModel u)
+        private async Task OnUserAdded(UserAddedRabbitModel u)
         {
             using (var scope = _provider.CreateScope())
             {

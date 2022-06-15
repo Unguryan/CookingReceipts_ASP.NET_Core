@@ -1,6 +1,5 @@
 using Core.Context;
 using Core.RabbitMQ;
-using Interfaces.RabbitMQ;
 using Microsoft.EntityFrameworkCore;
 using UserMicroservice.Services;
 
@@ -11,10 +10,11 @@ builder.Services.AddDbContext<CookingContext>(options =>
 
 builder.Services.AddSingleton(s => RabbitFactory.CreateBus("localhost"));
 builder.Services.AddSingleton<UserServiceHandler>();
-//builder.Services.AddSingleton(s => new UserServiceHandler(s.GetService<IRabbitBus>(), s));
 
 builder.Services.AddControllers();
 
+
+builder.Services.AddCors();
 
 
 var app = builder.Build();
@@ -22,6 +22,10 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors(builder => builder.WithOrigins("https://localhost:44497")
+                                .AllowAnyMethod()
+                                .AllowAnyHeader());
 
 app.UseAuthorization();
 

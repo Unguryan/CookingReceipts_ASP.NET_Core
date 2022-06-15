@@ -58,7 +58,13 @@
           <li class="nav-item"
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link btn btn-outline-light me-3" role="button" [routerLink]="['/admin']" *ngIf="IsAdmin()">Admin</a>
+            <a class="nav-link btn btn-outline-light me-3" role="button" [routerLink]="['/categories']" *ngIf="IsAdmin()">Caterogies</a>
+          </li>
+
+          <li class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link btn btn-outline-light me-3" role="button" [routerLink]="['/admin']" *ngIf="IsOwner()">Admin</a>
           </li>
 
           <li class="nav-item">

@@ -95,27 +95,18 @@ namespace IDS.Controllers
         {
             var userDB = await _context.Users.FirstOrDefaultAsync(u => u.UserName == changeRolesModel.UserName);
 
-            if (userDB == null)
+            if (userDB == null || userDB.Roles.Contains("Owner", StringComparison.OrdinalIgnoreCase) 
+                || changeRolesModel.Roles.Contains("Owner", StringComparison.OrdinalIgnoreCase))
             {
                 return new UserIDS();
             }
 
-            var userToAdd = new UserIDS()
-            {
-                UserName = userDB.UserName,
-                Name = userDB.Name,
-                PasswordHash = userDB.PasswordHash,
-                Roles = changeRolesModel.Roles
-            };
+            userDB.Roles = changeRolesModel.Roles;
 
-
-            await RemoveTokens(userDB);
-            _context.Users.Remove(userDB);
-            var res = await _context.Users.AddAsync(userToAdd);
             await _context.SaveChangesAsync();
-            await GenerateToken(res.Entity, true);
+            //await GenerateToken(userDB, true);
 
-            return res.Entity;
+            return userDB;
         }
 
         [HttpPost("Login")]
@@ -159,7 +150,7 @@ namespace IDS.Controllers
 
             var res = await _context.Users.AddAsync(userToAdd);
             await _context.SaveChangesAsync();
-            await _bus.SendAsync<UserAddedModel>("Users", new UserAddedModel() { Id = userToAdd.Id, Name = userToAdd.Name });
+            await _bus.SendAsync<UserAddedRabbitModel>("Users", new UserAddedRabbitModel() { Id = userToAdd.Id, Name = userToAdd.Name });
             //TODO: Add User To Users via RabbitMQ
 
             return await GenerateToken(res.Entity, true);

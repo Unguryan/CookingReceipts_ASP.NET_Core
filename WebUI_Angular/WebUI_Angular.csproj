@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -23,15 +23,31 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\AuthExtensions.ts" />
+    <None Remove="ClientApp\src\app\category-change\category-change.component.ts" />
+    <None Remove="ClientApp\src\app\category-create\category-create.component.ts" />
+    <None Remove="ClientApp\src\app\category-list\category-list.component.ts" />
+    <None Remove="ClientApp\src\app\guards\auth-guard.guard.ts" />
+    <None Remove="ClientApp\src\app\guards\owner-admin-guard.guard.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
-    <None Remove="ClientApp\src\app\receipts\receipts.component.ts" />
+    <None Remove="ClientApp\src\app\receipt-list\receipt-list.component.ts" />
     <None Remove="ClientApp\src\app\register\register.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\AuthExtensions.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\category-change\category-change.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\category-create\category-create.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\category-list\category-list.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\guards\auth-guard.guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\guards\owner-admin-guard.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\receipts\receipts.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\receipt-list\receipt-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\register\register.component.ts" />
   </ItemGroup>
 

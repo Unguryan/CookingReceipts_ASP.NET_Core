@@ -48,6 +48,15 @@ export class NavMenuComponent {
     return false;
   }
 
+  IsOwner(): Boolean {
+    if (this.IsAuth() && this.user != undefined) {
+      if (this.user?.roles.includes('Owner')) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   SetUser() {
     if (this.user != undefined) {
       return;
@@ -64,7 +73,8 @@ export class NavMenuComponent {
 
   LogOut() {
     var token = localStorage.getItem('token');
-    if (token == null || token === "") {
+    if (token == null || token == "") {
+      this.router.navigate(['']);
       return;
     }
 
