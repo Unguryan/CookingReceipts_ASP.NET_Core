@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  idsAPI: "https://localhost:5001"
+  idsAPI: "https://localhost:5001",
+  categoryAPI: "https://localhost:5003"
 };
 
 /*

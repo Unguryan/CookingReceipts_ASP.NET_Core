@@ -1,6 +1,9 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { NavigationExtras, Router } from "@angular/router";
+import { environment } from "../../environments/environment"
+
+import { faRedo } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'categories',
@@ -9,20 +12,79 @@ import { Router } from "@angular/router";
 
 export class CategoryListComponent {
 
+
   nameCategory: string = "";
   categories: Category[] = new Array<Category>();
+    refIcon: any;
 
   constructor(private http: HttpClient, private router: Router) {
-
     this.Init();
+    this.refIcon = faRedo;
   }
 
   OnSearchClick(nameCategory: string) {
-    
+    var token = localStorage.getItem('token');
+    if (token == null || token == "") {
+      this.router.navigate(['']);
+      return;
+    }
+
+    const url = environment.categoryAPI + "/Category/" + nameCategory.toString();
+
+    this.http.get<Category[]>(url,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+          'Authorization': token
+        }),
+      },
+    ).subscribe(response => {
+      this.categories = response;
+    }, error => {
+      this.router.navigate(['']);
+    })
   }
 
-  OnChangeClick(category: Category) {
+  OnChangeClick(cat: Category) {
+    //this.categoryToChange
 
+    const navigationExtras: NavigationExtras = {
+      state: {
+        user: "HI",
+        category: cat
+      }
+    };
+
+    this.router.navigate(['/categories/change'], navigationExtras);
+  }
+
+  OnRemoveClick(cat: Category) {
+    var token = localStorage.getItem('token');
+    if (token == null || token == "") {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const data = JSON.stringify({ Id: cat.id });
+    const url = environment.categoryAPI + "/Category/RemoveCategory";
+
+    this.http.post<Category>(url, data,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+          'Authorization': token
+        }),
+      },
+    ).subscribe(response => {
+      if (response.id == -1) {
+        //Error
+      }
+      else {
+        this.Init();
+      }
+    })
   }
 
   Init() {
@@ -31,20 +93,19 @@ export class CategoryListComponent {
       this.router.navigate(['']);
       return;
     }
+
+    const url = environment.categoryAPI + "/Category";
     
-    this.http.get("https://localhost:5003/Category",
+    this.http.get<Category[]>(url,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Accept': '*/*',
           'Authorization': token
-          //'Access-Control-Allow-Origin': 'https://localhost:5001',
-          //'Access-Control-Allow-Credentials': 'true'
         }),
       },
     ).subscribe(response => {
-      response.toString();
-      //this.categories = response;
+      this.categories = response;
     }, error => {
       this.router.navigate(['']);
     })

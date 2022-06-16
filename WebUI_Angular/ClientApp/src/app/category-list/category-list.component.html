@@ -1,10 +1,22 @@
 <p>Categories</p>
 
+
+
 <div class="container">
 
+  <div class="d-inline-flex ">
+    <a class="btn " role="button" (click)="Init()">
+      <div class="d-flex  ">
+        <h2 class="">Categories</h2>
+        <fa-icon class="ms-2 mt-1" [icon]="refIcon"></fa-icon>
+      </div>
+      
+    </a>
+  </div>
+  
 
 
-  <div class="d-flex ">
+  <div class="d-flex mt-4">
 
 
 
@@ -14,10 +26,10 @@
         <input class="input" matInput [(ngModel)]="nameCategory">
       </mat-form-field>
       <button (click)="OnSearchClick(nameCategory)" type="button" class="btn btn-primary">Search</button>-->
-      <div class="input-group">
+      <div class="input-group" *ngIf="categories.length != 0">
         <input type="text" matInput [(ngModel)]="nameCategory"
                class="form-control" placeholder="Name" aria-label="Name" aria-describedby="button-search">
-        <button class="btn btn-primary" type="button" id="button-search">Search</button>
+        <button class="btn btn-primary" type="button" id="button-search" (click)="OnSearchClick(nameCategory)">Search</button>
       </div>
     </div>
 
@@ -28,14 +40,26 @@
 
   </div>
 
-  <div class="category-list">
-    <mat-card class="category-items" *ngFor="let category of categories">
-      <mat-card-header>
-        <mat-card-title>{{category.name}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-actions>
-        <button class="btn btn-outline-warning" mat-button (click)="OnChangeClick(category)">Change</button>
-      </mat-card-actions>
+  <div class="category-list mt-4 col col-lg-5">
+    <mat-card class="category-items mt-2" *ngFor="let category of categories">
+      <div class="d-flex">
+        <mat-card-header>
+          <mat-card-title>ID №{{category.id}}: {{category.name}}</mat-card-title>
+        </mat-card-header>
+
+        <div class="d-flex ms-auto justify-content-end">
+          <mat-card-actions class="me-4">
+            <button class="btn btn-outline-warning" mat-button (click)="OnChangeClick(category)">Change</button>
+          </mat-card-actions>
+
+          <mat-card-actions class="me-1">
+            <button class="btn btn-outline-danger" mat-button (click)="OnRemoveClick(category)">Remove</button>
+          </mat-card-actions>
+
+        </div>
+
+      </div>
+
     </mat-card>
   </div>
 

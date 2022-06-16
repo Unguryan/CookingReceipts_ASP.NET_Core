@@ -32,6 +32,7 @@ import { ReceiptListComponent } from './receipt-list/receipt-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryCreateComponent } from './category-create/category-create.component';
 import { CategoryChangeComponent } from './category-change/category-change.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 //import { CounterComponent } from './counter/counter.component';
 //import { FetchDataComponent } from './fetch-data/fetch-data.component';
@@ -81,6 +82,7 @@ import { CategoryChangeComponent } from './category-change/category-change.compo
     MatSelectModule,
     MatSnackBarModule,
     BrowserAnimationsModule,
+    FontAwesomeModule,
 
   ],
   providers: [],

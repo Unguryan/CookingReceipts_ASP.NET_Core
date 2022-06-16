@@ -7,6 +7,7 @@ using Core.RabbitMQ.Models;
 using Interfaces.Models;
 using Interfaces.RabbitMQ;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace CategoryMicroservice.Controllers
@@ -38,13 +39,28 @@ namespace CategoryMicroservice.Controllers
             return list;
         }
 
+        [HttpGet("{name}")]
+        [CustomTokenAuthentication("Owner, Admin")]
+        public async Task<IEnumerable<ICategory>> GetCategoriesByName(string name)
+        {
+            var list = new List<ICategory>();
+            foreach (var item in _context.Categories.AsEnumerable()
+                .Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase)))
+            {
+                list.Add(new Category(item));
+            }
+
+            return list;
+        }
+
         [HttpPost("AddCategory")]
         [CustomTokenAuthentication("Owner, Admin")]
         public async Task<ICategory> AddCategory(AddCategoryModel model)
         {
-            if (string.IsNullOrEmpty(model?.Name) ||
-                await _context.Categories.AnyAsync(c => c.Name.Equals(model.Name, StringComparison.OrdinalIgnoreCase)))
+            if (string.IsNullOrEmpty(model?.Name) 
+                || _context.Categories.AsEnumerable().Any(c => c.Name.Equals(model.Name, StringComparison.OrdinalIgnoreCase)))
             {
+
                 ModelState.AddModelError("Error", $"You are already have {model.Name} category");
                 return new Category(-1, "");
             }
@@ -63,6 +79,13 @@ namespace CategoryMicroservice.Controllers
                 !await _context.Categories.AnyAsync(c => c.Id == model.Id))
             {
                 ModelState.AddModelError("Error", $"You do not have {model.Name} category");
+                return new Category(-1, "");
+            }
+
+            if (_context.Categories.AsEnumerable().Any(c => c.Name.Equals(model.Name, StringComparison.OrdinalIgnoreCase)))
+            {
+
+                ModelState.AddModelError("Error", $"You are already have {model.Name} category");
                 return new Category(-1, "");
             }
 
