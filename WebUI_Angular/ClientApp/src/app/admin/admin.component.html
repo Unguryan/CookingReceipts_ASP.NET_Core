@@ -1,0 +1,36 @@
+<p>Users</p>
+
+<div class="container">
+
+  <div class="d-inline-flex ">
+    <a class="btn " role="button" (click)="Init()">
+      <div class="d-flex">
+        <h2 class="">Users</h2>
+        <fa-icon class="ms-2 mt-1" [icon]="refIcon"></fa-icon>
+      </div>
+    </a>
+  </div>
+
+
+  <div class="user-list mt-4 col">
+    <mat-card class="user-items mt-2" *ngFor="let user of users">
+      <div class="d-flex ms-auto justify-content-end">
+        <mat-card-header class="me-auto">
+          <mat-card-title class="mt-3"> {{user.name}} </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-actions class="me-1">
+          <button class="btn btn-outline-warning" *ngIf="!IsAdmin(user) && !IsOwner(user)" mat-button (click)="OnSetAdminClick(user)">Set</button>
+        </mat-card-actions>
+
+        <mat-card-actions class="me-1">
+          <button class="btn btn-outline-danger" *ngIf="IsAdmin(user) && !IsOwner(user)" mat-button (click)="OnRemoveAdminCClick(user)">Remove</button>
+        </mat-card-actions>
+
+      </div>
+     
+
+    </mat-card>
+  </div>
+
+</div>

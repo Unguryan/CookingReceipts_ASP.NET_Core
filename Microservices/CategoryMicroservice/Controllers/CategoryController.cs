@@ -27,7 +27,7 @@ namespace CategoryMicroservice.Controllers
         }
 
         [HttpGet()]
-        [CustomTokenAuthentication("Owner, Admin")]
+        [CustomTokenAuthentication("Owner, Admin, User")]
         public async Task<IEnumerable<ICategory>> GetAllCategories()
         {
             var list = new List<ICategory>();
@@ -122,10 +122,17 @@ namespace CategoryMicroservice.Controllers
             }
 
             var temp = new Category(res);
-            _context.Categories.Remove(res);
-            await _context.SaveChangesAsync();
-            //TODO: Notify Receips Service, and remove all receipts with this category
-            await _bus.SendAsync<RemovedCategoryRabbitModel>("Categories", new RemovedCategoryRabbitModel() { Id = res.Id});
+
+            await _bus.SendAsync<RemovedCategoryRabbitModel>("Categories", new RemovedCategoryRabbitModel() { Name = res.Name })
+                .ContinueWith(async(x) => 
+                {
+                    _context.Categories.Remove(res);
+                    await _context.SaveChangesAsync();
+                });
+
+            
+            //TODO: Notify Receips Service, and do not remove all receipts with this category
+            
 
 
             return temp;

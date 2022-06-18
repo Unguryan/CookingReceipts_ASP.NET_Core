@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   idsAPI: "https://localhost:5001",
-  categoryAPI: "https://localhost:5003"
+  categoryAPI: "https://localhost:5003",
+  receiptAPI: "https://localhost:5004",
+
 };
 
 /*

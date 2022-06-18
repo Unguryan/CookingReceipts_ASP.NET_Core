@@ -9,14 +9,17 @@ namespace Core.Models
         {
             Id = receiptDbo.Id;
             //TODO: Fix error here 
-            Owner = new User(receiptDbo.Owner);
+            Owner = new User(receiptDbo.Owner, false);
             Name = receiptDbo.Name;
             Description = receiptDbo.Description;
             Ingredients = receiptDbo.Ingredients;
             Categories = new List<ICategory>();
-            foreach (var item in receiptDbo.Categories)
+            if(receiptDbo.Categories != null)
             {
-                Categories.Add(new Category(item));
+                foreach (var item in receiptDbo.Categories)
+                {
+                    Categories.Add(new Category(item));
+                }
             }
         }
 

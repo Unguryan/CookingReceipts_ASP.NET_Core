@@ -1,23 +1,25 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
-import { environment } from "../../environments/environment"
 
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
+import { environment } from "../../environments/environment";
+import { AuthExtensions, User } from "../AuthExtensions";
+import { Category } from "../category-list/category-list.component";
 
 @Component({
-  selector: 'category-list',
-  templateUrl: './category-list.component.html'
+  selector: 'my-receipt-list',
+  templateUrl: './my-receipt-list.component.html'
 })
 
-export class CategoryListComponent {
+export class MyReceiptListComponent {
+  nameReceipt: string = "";
+  receipts: Receipt[] = new Array<Receipt>();
+  refIcon: any;
 
-
-  nameCategory: string = "";
-  categories: Category[] = new Array<Category>();
-    refIcon: any;
-
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private auth: AuthExtensions) {
     this.Init();
     this.refIcon = faRedo;
   }
@@ -29,9 +31,9 @@ export class CategoryListComponent {
       return;
     }
 
-    const url = environment.categoryAPI + "/Category/" + nameCategory.toString();
+    const url = environment.receiptAPI + "/Receipts/ByName/" + this.nameReceipt.toString();
 
-    this.http.get<Category[]>(url,
+    this.http.get<Receipt[]>(url,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -40,35 +42,35 @@ export class CategoryListComponent {
         }),
       },
     ).subscribe(response => {
-      this.categories = response;
+      this.receipts = response;
     }, error => {
       this.router.navigate(['']);
     })
   }
 
-  OnChangeClick(cat: Category) {
+  OnChangeClick(rec: Receipt) {
     //this.categoryToChange
 
     const navigationExtras: NavigationExtras = {
       state: {
-        category: cat
+        receipt: rec
       }
     };
 
-    this.router.navigate(['/categories/change'], navigationExtras);
+    this.router.navigate(['/receipts/change'], navigationExtras);
   }
 
-  OnRemoveClick(cat: Category) {
+  OnRemoveClick(rec: Receipt) {
     var token = localStorage.getItem('token');
     if (token == null || token == "") {
       this.router.navigate(['/login']);
       return;
     }
 
-    const data = JSON.stringify({ Id: cat.id });
-    const url = environment.categoryAPI + "/Category/RemoveCategory";
+    const data = JSON.stringify({ Id: rec.id });
+    const url = environment.receiptAPI + "/Receipts/RemoveReceipt";
 
-    this.http.post<Category>(url, data,
+    this.http.post<Receipt>(url, data,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -86,16 +88,18 @@ export class CategoryListComponent {
     })
   }
 
-  Init() {
+  async Init() {
     var token = localStorage.getItem('token');
     if (token == null || token == "") {
       this.router.navigate(['']);
       return;
     }
 
-    const url = environment.categoryAPI + "/Category";
-    
-    this.http.get<Category[]>(url,
+    var user = await this.auth.GetUser();
+
+    const url = environment.receiptAPI + "/Receipts/ByUser/" + user.id;
+
+    this.http.get<Receipt[]>(url,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -104,20 +108,28 @@ export class CategoryListComponent {
         }),
       },
     ).subscribe(response => {
-      this.categories = response;
+      this.receipts = response;
     }, error => {
       this.router.navigate(['']);
     })
   }
 }
 
-export class Category {
+export class Receipt {
   id: number;
   name: string;
+  owner: User;
+  categories: Category[];
+  description: string;
+  ingredients: string;
 
-  constructor(id: number, name: string) {
+  constructor(id: number, name: string, Owner: User, Categories: Category[], description: string, ingredients: string) {
     this.id = id;
     this.name = name;
+    this.owner = Owner;
+    this.categories = Categories;
+    this.description = description;
+    this.ingredients = ingredients;
   }
 }
 

@@ -22,20 +22,42 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\admin\admin.component.ts" />
     <None Remove="ClientApp\src\app\AuthExtensions.ts" />
     <None Remove="ClientApp\src\app\category-change\category-change.component.ts" />
+    <None Remove="ClientApp\src\app\guards\owner-guard.guard.ts" />
+    <None Remove="ClientApp\src\app\liked-receipt-list\liked-receipt-list.component.ts" />
+    <None Remove="ClientApp\src\app\receipt-change\receipt-change.component.ts" />
     <None Remove="ClientApp\src\app\category-create\category-create.component.ts" />
     <None Remove="ClientApp\src\app\category-list\category-list.component.ts" />
     <None Remove="ClientApp\src\app\guards\auth-guard.guard.ts" />
     <None Remove="ClientApp\src\app\guards\owner-admin-guard.guard.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\my-receipt-list\my-receipt-list.component.ts" />
+    <None Remove="ClientApp\src\app\receipt-create\receipt-create.component.ts" />
+    <None Remove="ClientApp\src\app\receipt-details\receipt-details.component.ts" />
     <None Remove="ClientApp\src\app\receipt-list\receipt-list.component.ts" />
     <None Remove="ClientApp\src\app\register\register.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\admin.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\AuthExtensions.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\category-change\category-change.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\guards\owner-guard.guard.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\liked-receipt-list\liked-receipt-list.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\receipt-change\receipt-change.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\receipt-create\receipt-create.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\category-create\category-create.component.ts">
@@ -48,7 +70,13 @@
     <TypeScriptCompile Include="ClientApp\src\app\guards\owner-admin-guard.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\receipt-list\receipt-list.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\receipt-details\receipt-details.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\register\register.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\my-receipt-list\my-receipt-list.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -1,0 +1,139 @@
+<p>Add Receipt</p>
+
+<div class="container-fluid">
+
+
+
+  <form class="form-signin" #addForm="ngForm" (ngSubmit)="addReceipt(addForm)">
+
+    <h2 class="form-signin-heading">Add Receipt</h2>
+
+    <br />
+
+    <div class="row">
+
+      <div class="mt-2 col col-md-3">
+
+        <div *ngIf="invalidAdd"
+             class="alert alert-danger">
+          <span>Already have this Receipt</span>
+        </div>
+
+        <div class="mt-2">
+          <div>
+            <input class="form-control" asp-for="Name"
+                   type="text" id="Name" minlength="4" name="Name" ngModel placeholder="Name" required
+                   #nameField="ngModel" />
+          </div>
+
+          <div *ngIf="nameField.invalid && (nameField.dirty || nameField.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="nameField.errors?.['required']">
+              Name is required.
+            </div>
+            <div *ngIf="nameField.errors?.['minlength']">
+              Name must be at least 4 characters long.
+            </div>
+
+          </div>
+        </div>
+
+
+
+        <!--<ejs-dropdownlist name="name"--> <!--[(ngModel)]='selectedCategory'-->
+        <!--[dataSource]='allCategories' [placeholder]='autoDrivenPlaceholder' floatLabelType='Auto'>
+        </ejs-dropdownlist>-->
+        <!--<div *ngIf="nameField.invalid && (nameField.dirty || nameField.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="nameField.errors?.['required']">
+          Name is required.
+        </div>
+        <div *ngIf="nameField.errors?.['minlength']">
+          Name must be at least 4 characters long.
+        </div>-->
+
+        <div class="mt-3">
+          <div>
+            <input class="form-control" asp-for="Description"
+                   type="text" id="Name" minlength="20" name="Description" ngModel placeholder="Description" required
+                   #descriptionField="ngModel" />
+          </div>
+
+          <div *ngIf="descriptionField.invalid && (descriptionField.dirty || descriptionField.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="descriptionField.errors?.['required']">
+              Description is required.
+            </div>
+            <div *ngIf="descriptionField.errors?.['minlength']">
+              Description must be at least 20 characters long.
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="mt-3">
+          <div>
+            <input class="form-control" asp-for="Ingredients"
+                   type="text" id="Name" minlength="20" name="Ingredients" ngModel placeholder="Ingredients" required
+                   #ingredientsField="ngModel" />
+          </div>
+
+          <div *ngIf="ingredientsField.invalid && (ingredientsField.dirty || ingredientsField.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="ingredientsField.errors?.['required']">
+              Ingredients is required.
+            </div>
+            <div *ngIf="ingredientsField.errors?.['minlength']">
+              Ingredients must be at least 20 characters long.
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col col-md-3 mt-3">
+
+        <div class="dropdown dropend btn-group d-flex">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          Add Category
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li *ngFor="let category of allCategories">
+            <button class="dropdown-item" type="button" (click)="onSelect(category)">
+            {{category.name}}
+            </button>
+          </li>
+        </ul>
+        </div>
+
+        <div class="mt-3">
+          <ul class="nav flex-column" >
+            <li class="nav-item" *ngFor="let category of addedCategories">
+              <div>
+                <span>{{category.name}}</span>
+                <button class="me-auto btn btn-outline-danger ms-3" type="button" (click)="onRemove(category)">
+                  X
+                </button>
+              </div>
+              
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <button type="submit" [disabled]="nameField.invalid || descriptionField.invalid || ingredientsField.invalid || addedCategories.length == 0"
+            class="btn btn-success mt-3">Add Receipt</button>
+
+  </form>
+
+</div>

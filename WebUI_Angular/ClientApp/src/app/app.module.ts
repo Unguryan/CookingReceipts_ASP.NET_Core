@@ -23,11 +23,18 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 //import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AdminComponent } from './admin/admin.component';
 
 import { AuthGuard } from './guards/auth-guard.guard';
 import { OwnerAdminGuard } from './guards/owner-admin-guard.guard';
+import { OwnerGuard } from './guards/owner-guard.guard';
 
 import { ReceiptListComponent } from './receipt-list/receipt-list.component';
+import { MyReceiptListComponent } from './my-receipt-list/my-receipt-list.component';
+import { LikedReceiptListComponent } from './liked-receipt-list/liked-receipt-list.component';
+import { ReceiptCreateComponent } from './receipt-create/receipt-create.component';
+import { ReceiptChangeComponent } from './receipt-change/receipt-change.component';
+import { ReceiptDetailsComponent } from './receipt-details/receipt-details.component';
 
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryCreateComponent } from './category-create/category-create.component';
@@ -44,11 +51,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     //HomeComponent,
     LoginComponent,
     RegisterComponent,
+    AdminComponent,
 
     //AuthGuard,
     //OwnerAdminGuard,
 
     ReceiptListComponent,
+    MyReceiptListComponent,
+    LikedReceiptListComponent,
+    ReceiptCreateComponent,
+    ReceiptChangeComponent,
+    ReceiptDetailsComponent,
 
     CategoryListComponent,
     CategoryCreateComponent,
@@ -64,8 +77,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
+      { path: 'admin', component: AdminComponent, canActivate: [OwnerGuard] },
 
       { path: '', component: ReceiptListComponent },
+      { path: 'receipt', component: ReceiptDetailsComponent },
+      { path: 'myReceipts', component: MyReceiptListComponent, canActivate: [AuthGuard] },
+      { path: 'likedReceipts', component: LikedReceiptListComponent, canActivate: [AuthGuard] },
+      { path: 'receipts/add', component: ReceiptCreateComponent, canActivate: [AuthGuard] },
+      { path: 'receipts/change', component: ReceiptChangeComponent, canActivate: [AuthGuard] },
 
       { path: 'categories', component: CategoryListComponent, canActivate: [OwnerAdminGuard] },
       { path: 'categories/add', component: CategoryCreateComponent, canActivate: [OwnerAdminGuard] },

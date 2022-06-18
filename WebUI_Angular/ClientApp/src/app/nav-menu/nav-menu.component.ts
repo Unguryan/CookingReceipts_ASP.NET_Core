@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { AuthExtensions, User } from '../AuthExtensions';
+import { AuthExtensions, UserIDS } from '../AuthExtensions';
 
 @Component({
   selector: 'app-nav-menu',
@@ -12,7 +12,7 @@ import { AuthExtensions, User } from '../AuthExtensions';
 export class NavMenuComponent {
   auth: AuthExtensions;
   isExpanded = false;
-  public user: User | undefined;
+  public user: UserIDS | undefined;
 
   constructor(
     private http: HttpClient,

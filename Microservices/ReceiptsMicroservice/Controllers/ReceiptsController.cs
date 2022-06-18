@@ -34,13 +34,29 @@ namespace ReceiptsMicroservice.Controllers
             return list;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IReceipt> GetReceipt(int id)
+        {
+            var res = await _context.Receipts.Include(x => x.Owner).Include(x => x.Categories)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (res == null)
+            {
+                ModelState.AddModelError("Error", $"Receipt not found");
+                return new Receipt(-1, null, "", "", "");
+            }
+
+
+            return new Receipt(res);
+        }
+
         [HttpGet("ByName/{name}")]
         public async Task<IEnumerable<IReceipt>> GetReceiptsByName(string name)
         {
             var list = new List<IReceipt>();
-            foreach (var item in await _context.Receipts
-                .Include(r => r.Categories).Include(r => r.Owner).AsQueryable()
-                .Where(r => r.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToListAsync())
+            foreach (var item in _context.Receipts
+                .Include(r => r.Categories).Include(r => r.Owner).AsEnumerable()
+                .Where(r => r.Name.Contains(name, StringComparison.OrdinalIgnoreCase)))
             {
                 list.Add(new Receipt(item));
             }
@@ -82,15 +98,15 @@ namespace ReceiptsMicroservice.Controllers
         {
             //TODO: Get From attibute/query user to check, that them are same
             var list = new List<IReceipt>();
-            var u = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var u = await _context.Users.Include(x => x.LikedReceipts).FirstOrDefaultAsync(u => u.Id == userId);
             if(u == null || u.LikedReceipts == null || !u.LikedReceipts.Any())
             {
                 return list;
             }
 
             //TODO: Fix it
-            foreach (var item in await _context.Receipts.AsQueryable()
-                .Where(r => u.LikedReceipts.Any(lr => lr.Id == r.Id)).ToListAsync())
+            foreach (var item in _context.Receipts.Include(r => r.Owner).Include(r => r.Categories).AsEnumerable()
+                .Where(r => u.LikedReceipts.Any(lr => lr.Id == r.Id)))
             {
                 list.Add(new Receipt(item));
             }
@@ -175,7 +191,7 @@ namespace ReceiptsMicroservice.Controllers
         {
             //TODO: Get From attibute/query user to check, that them are same
             
-            var rec = await _context.Receipts.FirstOrDefaultAsync(r => r.Id == model.Id);
+            var rec = await _context.Receipts.Include(x => x.Owner).Include(x => x.Categories).FirstOrDefaultAsync(r => r.Id == model.Id);
 
             if (rec == null)
             {
@@ -188,6 +204,44 @@ namespace ReceiptsMicroservice.Controllers
             await _context.SaveChangesAsync();
 
             return temp;
+        }
+
+        [HttpPost("AddLikedReceipt")]
+        [CustomTokenAuthentication("Owner, Admin, User")]
+        public async Task<IReceipt> AddLikedReceipt(AddOrRemoveLikedReceiptModel model)
+        {
+            //TODO: Get From attibute/query user to check, that them are same
+            var u = await _context.Users.Include(x => x.LikedReceipts).ThenInclude(r => r.Owner).FirstOrDefaultAsync(u => u.Id == model.UserId);
+            if (u == null || u.LikedReceipts == null || u.LikedReceipts.Any(x => x.Id == model.ReceiptId))
+            {
+                ModelState.AddModelError("Error", $"Receipt undefined");
+                return new Receipt(-1, null, "", "", "");
+            }
+
+            var r = await _context.Receipts.Include(r => r.Owner).FirstOrDefaultAsync(r => r.Id == model.ReceiptId);
+            u.LikedReceipts.Add(r);
+            await _context.SaveChangesAsync();
+
+            return new Receipt(r);
+        }
+
+        [HttpPost("RemoveLikedReceipt")]
+        [CustomTokenAuthentication("Owner, Admin, User")]
+        public async Task<IReceipt> RemoveLikedReceipt(AddOrRemoveLikedReceiptModel model)
+        {
+            //TODO: Get From attibute/query user to check, that them are same
+            var u = await _context.Users.Include(x => x.LikedReceipts).ThenInclude(r => r.Owner).FirstOrDefaultAsync(u => u.Id == model.UserId);
+            if (u == null || u.LikedReceipts == null || !u.LikedReceipts.Any() || !u.LikedReceipts.Any(x => x.Id == model.ReceiptId))
+            {
+                ModelState.AddModelError("Error", $"Receipt undefined");
+                return new Receipt(-1, null, "", "", "");
+            }
+
+            var r = u.LikedReceipts.FirstOrDefault(x => x.Id == model.ReceiptId);
+            u.LikedReceipts.Remove(r);
+            await _context.SaveChangesAsync();
+
+            return new Receipt(r);
         }
     }
 }

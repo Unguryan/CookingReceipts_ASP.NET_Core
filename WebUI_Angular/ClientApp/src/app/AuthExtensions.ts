@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
+import { Receipt } from './my-receipt-list/my-receipt-list.component';
 
 
 @Injectable({
@@ -11,11 +12,11 @@ export class AuthExtensions {
   constructor(
     private http: HttpClient) { }
 
-  async GetUser(): Promise<User> {
+  async GetUser(): Promise<UserIDS> {
 
     var token = localStorage.getItem('token');
     if (token == null || token == "") {
-      return new User("", "", "");
+      return new UserIDS(-1, "", "", "");
     }
 
     ///
@@ -27,7 +28,7 @@ export class AuthExtensions {
     const data = JSON.stringify(tokenData);
     var url = environment.idsAPI + '/User/GetUserByToken';
 
-    var res = this.http.post<User>(url, data,
+    var res = this.http.post<UserIDS>(url, data,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -43,15 +44,38 @@ export class AuthExtensions {
 }
 
 
-export class User {
+export class UserIDS {
 
-  constructor(Name: string, UserName: string, Roles: string) {
+  id: number;
+  name: string;
+  userName: string;
+  roles: string;
+
+  constructor(Id: number, Name: string, UserName: string, Roles: string) {
+    this.id = Id;
     this.name = Name;
     this.userName = UserName;
     this.roles = Roles;
   }
 
+  
+}
+
+
+export class User {
+
+  id: number;
   name: string;
-  userName: string;
-  roles: string;
+  receipts: Receipt[];
+  likedReceipts: Receipt[];
+
+
+  constructor(Id: number, Name: string, Receipts: Receipt[], LikedReceipts: Receipt[]) {
+    this.id = Id;
+    this.name = Name;
+    this.receipts = Receipts;
+    this.likedReceipts = LikedReceipts;
+  }
+
+  
 }

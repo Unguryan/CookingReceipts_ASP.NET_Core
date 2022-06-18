@@ -5,25 +5,33 @@ namespace Core.Models
 {
     public class User : IUser
     {
-        public User(UserDbo userDbo)
+        public User(UserDbo userDbo, bool initReceipts = false)
         {
             Id = userDbo.Id;
             Name = userDbo.Name;
             Receipts = new List<IReceipt>();
-            if(userDbo.Receipts != null)
+            if(userDbo.Receipts != null && initReceipts)
             {
                 foreach (var item in userDbo.Receipts)
                 {
-                    Receipts.Add(new Receipt(item));
+                    Receipts.Add(new Receipt(item.Id,
+                                             this,
+                                             item.Name,
+                                             item.Description,
+                                             item.Ingredients));
                 }
             }
 
             LikedReceipts = new List<IReceipt>();
-            if (userDbo.LikedReceipts != null)
+            if (userDbo.LikedReceipts != null && initReceipts)
             {
                 foreach (var item in userDbo.LikedReceipts)
                 {
-                    LikedReceipts.Add(new Receipt(item));
+                    LikedReceipts.Add(new Receipt(item.Id,
+                                             this,
+                                             item.Name,
+                                             item.Description,
+                                             item.Ingredients));
                 }
             }
         }

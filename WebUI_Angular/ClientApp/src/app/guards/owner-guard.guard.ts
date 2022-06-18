@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class OwnerAdminGuard implements CanActivate {
+export class OwnerGuard implements CanActivate {
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -38,7 +38,7 @@ export class OwnerAdminGuard implements CanActivate {
 
     const roles = (await res).toLowerCase();
 
-    var result = roles.includes("owner") || roles.includes("admin");
+    var result = roles.includes("owner");
     return result;
   }
 }

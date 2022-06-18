@@ -1,0 +1,79 @@
+<p>Liked Receipts</p>
+
+<div class="container">
+
+  <div class="d-inline-flex ">
+    <a class="btn " role="button" (click)="Init()">
+      <div class="d-flex">
+        <h2 class="">Liked Receipts</h2>
+        <fa-icon class="ms-2 mt-1" [icon]="refIcon"></fa-icon>
+      </div>
+    </a>
+  </div>
+
+
+  <div class="d-flex mt-4">
+
+    <div class="col col-lg-3">
+
+      <div class="input-group" *ngIf="receipts.length != 0">
+        <input type="text" matInput [(ngModel)]="nameReceipt"
+               class="form-control" placeholder="Name" aria-label="Name" aria-describedby="button-search">
+        <button class="btn btn-primary" type="button" id="button-search" (click)="OnSearchClick(nameReceipt)">Search</button>
+      </div>
+    </div>
+
+    <!--<div class="ms-auto">
+      <a class="btn btn-outline-success" role="button" [routerLink]="['/receipts/add']">Add Receipt</a>
+    </div>-->
+
+  </div>
+
+  <div class="receipt-list mt-4 col">
+    <mat-card class="receipt-items mt-2" *ngFor="let receipt of receipts">
+      <div class="d-flex ms-auto justify-content-end">
+        <mat-card-header class="me-auto">
+          <mat-card-title class="mt-3"> {{receipt.name}} </mat-card-title>
+        </mat-card-header>
+
+        <!--<mat-card-actions class="me-4">
+      <button class="btn btn-outline-warning" mat-button (click)="OnChangeClick(receipt)">Change</button>
+    </mat-card-actions>-->
+
+        <mat-card-actions class="me-1">
+          <button class="btn btn-outline-danger" mat-button (click)="OnRemoveClick(receipt)">Remove From Liked</button>
+        </mat-card-actions>
+
+      </div>
+
+      <mat-card-header class="me-auto">
+        <mat-card-title class="mt-3 fw-semi-bold"> user: {{receipt.owner.name}} </mat-card-title>
+      </mat-card-header>
+
+      <div class="">
+
+
+        <br />
+
+        <label class="ms-4">Categories: </label>
+        <div class="d-inline-flex row ">
+
+          <mat-card-header *ngFor="let category of receipt.categories">
+            <mat-card-title class="fs-6"> {{category.name}} </mat-card-title>
+          </mat-card-header>
+        </div>
+
+        <mat-card-header>
+          <mat-card-title class="mt-2 ms-2 fs-5 text-wrap">Ingredients: {{receipt.ingredients}} </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-header>
+          <mat-card-title class="mt-2 ms-2 fs-5  text-wrap">Description: {{receipt.description}} </mat-card-title>
+        </mat-card-header>
+
+      </div>
+
+    </mat-card>
+  </div>
+
+</div>

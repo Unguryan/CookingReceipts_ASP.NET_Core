@@ -33,15 +33,17 @@ namespace ReceiptsMicroservice.Services
                 {
                     var context = services.GetRequiredService<CookingContext>();
 
-                    foreach (var item in context.Receipts
-                        .Include(r => r.Categories)
-                        .Where(r => r.Categories.Any(c => c.Id == cat.Id)))
-                    {
-                        context.Receipts.Remove(item);
-                        //TODO: Notify user, that receipt was removed
-                    }
+                    //TODO: DO NOT remove receipt, and just notify user, that he have to change category
 
-                    await context.SaveChangesAsync();
+                    //foreach (var item in context.Receipts
+                    //    .Include(r => r.Categories).AsEnumerable()
+                    //    .Where(r => r.Categories.Any(c => c.Name.Equals(cat.Name))))
+                    //{
+                    //    context.Receipts.Remove(item);
+                    //    //TODO: Notify user, that receipt was removed
+                    //}
+
+                    //await context.SaveChangesAsync();
                 }
                 catch
                 {

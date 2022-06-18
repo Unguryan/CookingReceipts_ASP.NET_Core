@@ -8,7 +8,7 @@ import { Category } from "../category-list/category-list.component";
 
 
 @Component({
-  selector: 'categories-create',
+  selector: 'category-create',
   templateUrl: './category-create.component.html'
 })
 
