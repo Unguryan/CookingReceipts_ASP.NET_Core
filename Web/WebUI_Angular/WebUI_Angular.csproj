@@ -41,6 +41,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CoreBLL\Core\Core.csproj" />
+    <ProjectReference Include="..\..\CoreBLL\Interfaces\Interfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\admin\admin.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
