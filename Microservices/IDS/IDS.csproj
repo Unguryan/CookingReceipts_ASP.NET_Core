@@ -12,10 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CoreBLL\Core\Core.csproj" />
-    <ProjectReference Include="..\..\CoreBLL\Interfaces\Interfaces.csproj" />
-    <ProjectReference Include="..\..\Core\Core.csproj" />
-    <ProjectReference Include="..\..\Interfaces\Interfaces.csproj" />
+    <Reference Include="Core">
+      <HintPath>DLL\Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Interfaces">
+      <HintPath>DLL\Interfaces.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

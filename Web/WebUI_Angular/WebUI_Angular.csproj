@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,8 +42,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CoreBLL\Core\Core.csproj" />
-    <ProjectReference Include="..\..\CoreBLL\Interfaces\Interfaces.csproj" />
+    <Reference Include="Core">
+      <HintPath>DLL\Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Interfaces">
+      <HintPath>DLL\Interfaces.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,9 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:64339",
+      "applicationUrl": "https://localhost:44497",
       "sslPort": 44397
     }
   },
@@ -11,18 +11,16 @@
     "WebUI_Angular": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:44497"
     },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }

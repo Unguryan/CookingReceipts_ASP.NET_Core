@@ -38,10 +38,10 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseCors(builder => {
-    builder.WithOrigins("https://localhost:44497")
+    builder.WithOrigins("http://localhost:44497")
                                 .AllowAnyMethod()
                                 .AllowAnyHeader();
-    builder.WithOrigins("https://localhost:5003")
+    builder.WithOrigins("http://localhost:5003")
                                 .AllowAnyMethod()
                                 .AllowAnyHeader();
 });

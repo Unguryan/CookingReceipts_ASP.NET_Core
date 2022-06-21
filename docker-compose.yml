@@ -1,0 +1,102 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+       SA_PASSWORD: "SuperPass123"
+       ACCEPT_EULA: "Y"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - rabbitmq_go_net
+    depends_on:
+    - "db"
+
+  core-lib:
+    image: corebll_image
+    build:
+      context: ./CoreBLL
+    depends_on:
+    - "rabbitmq"
+
+  category-service:
+    image: categoryservice_image
+    ports:
+    - 5003:80
+    build:
+      context: ./Microservices/CategoryMicroservice/
+    depends_on: 
+    - "core-lib"
+
+  ids-service:
+    image: idsservice_image
+    ports:
+    - 5001:80
+    build:
+      context: ./Microservices/IDS/
+    depends_on: 
+    - "core-lib"
+
+  receipts-service:
+    image: receiptsservice_image
+    ports:
+    - 5004:80
+    build:
+      context: ./Microservices/ReceiptsMicroservice/
+    depends_on: 
+    - "core-lib"
+
+  user-service:
+    image: userservice_image
+    ports:
+    - 5002:80
+    build:
+      context: ./Microservices/UserMicroservice/
+    depends_on: 
+    - "core-lib"
+
+  web-service:
+    image: webservice_image
+    ports:
+    - 44497:443
+    build:
+      context: ./Web/WebUI_Angular/
+    depends_on: 
+    - "core-lib"
+    - "category-service"
+    - "ids-service"
+    - "receipts-service"
+    - "user-service"
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge
+
+
+
+
+#version: '3.4'
+
+#services:
+#  webapp:
+#    image: mcr.microsoft.com/dotnet/core/samples:aspnetapp
+#    ports:
+#      - 80
+#      - 443
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#      - ASPNETCORE_URLS=https://+:443;http://+:80
+#      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+#      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+#    volumes:
+#      - ~/.aspnet/https:/https:ro

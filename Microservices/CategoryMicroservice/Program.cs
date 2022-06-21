@@ -21,7 +21,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors(builder => builder.WithOrigins("https://localhost:44497")
+app.UseCors(builder => builder.WithOrigins("http://localhost:44497")
                                 .AllowAnyMethod()
                                 .AllowAnyHeader());
 

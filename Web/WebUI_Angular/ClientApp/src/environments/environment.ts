@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  idsAPI: "https://localhost:5001",
-  categoryAPI: "https://localhost:5003",
-  receiptAPI: "https://localhost:5004",
+  idsAPI: "http://localhost:5001",
+  categoryAPI: "http://localhost:5003",
+  receiptAPI: "http://localhost:5004",
 
 };
 
